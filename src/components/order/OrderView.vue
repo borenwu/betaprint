@@ -24,7 +24,7 @@
 
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i> 印刷量</span>
-                <input class="form-control"  placeholder=0 type="number" v-model="amount">
+                <input class="form-control" placeholder=0 type="number" v-model="amount">
               </div>
               <br>
 
@@ -40,11 +40,11 @@
                   <option>精装</option>
                 </select>
               </div>
-              <br />
+              <br/>
 
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-calendar"></i> 交付日期</span>
-                <input type="text" style="width: 100%" id="duedate" />
+                <input type="text" style="width: 100%" id="duedate"/>
               </div>
               <br>
 
@@ -69,7 +69,6 @@
 
 <script>
   import $ from 'jquery'
-  import datepicker from '../datepicker/datepicker.vue'
   export default{
     data(){
       return {
@@ -80,6 +79,7 @@
 //        duedate: "",
         bookbind: "",
         description: "",
+        orders: [],
       }
     },
     methods: {
@@ -87,7 +87,7 @@
         e.preventDefault();
         var duedate = $('#duedate').val()
 
-        this.addOrder(this.clientname,this.taskname,this.amount,duedate,this.bookbind,this.description)
+        this.addOrder(this.clientname, this.taskname, this.amount, duedate, this.bookbind, this.description)
 //        console.log("clientname: "+this.clientname)
 //        console.log("taskname: "+this.taskname)
 //        console.log("amount: "+this.amount)
@@ -103,10 +103,10 @@
           data: {
             clientname: clientname,
             taskname: taskname,
-            amount:amount,
-            duedate:duedate,
-            bookbind:bookbind,
-            description:description
+            amount: amount,
+            duedate: duedate,
+            bookbind: bookbind,
+            description: description
           }
         }).done(function (resp) {
           if (resp.status == "success") {
@@ -116,26 +116,41 @@
       },
 
       todayOrder(){
+        var vm = this
+        console.log('mounted')
+        $.ajax({
+          type: 'get',
+          url: 'http://192.168.1.131:5000/order/look'
+        }).done(function (resp) {
+            console.log(resp.results.length)
+            if(resp.results.length > 0){
+              vm.orders = resp.results
+            }
+            else{
+              vm.order = []
+            }
 
+        })
       },
     },
-    components: {
-        datepicker,
+    components: {},
+    created(){
+
     },
     mounted() {
-        var vm = this
+      var vm = this
       $('#duedate').datetimepicker({
-        language:  'zh-CN',
+        language: 'zh-CN',
         format: 'yyyy-mm-dd',
         weekStart: 1,
-        todayBtn:  1,
+        todayBtn: 1,
         autoclose: 1,
         todayHighlight: 1,
         startView: 2,
         minView: 2,
         forceParse: 0
       })
-
+      this.todayOrder();
     }
   }
 </script>
