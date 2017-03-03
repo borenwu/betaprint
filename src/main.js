@@ -4,6 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import $ from 'jquery'
+import '../static/css/bootstrap-datetimepicker.min.css'
+import '../static/js/bootstrap-datetimepicker.min'
+import '../static/js/bootstrap-datetimepicker.zh-CN'
 
 
 

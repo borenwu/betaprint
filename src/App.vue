@@ -94,12 +94,35 @@
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-          <li class="header">菜单</li>
+          <li class="header">工具</li>
           <!-- Optionally, you can add icons to the links -->
-          <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-          <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+          <li class="active">
+            <router-link to="/home">
+              <i class="fa fa-dashboard"></i>
+              <span>主页</span>
+            </router-link>
+          </li>
+
+          <li>
+            <router-link to="/order">
+              <i class="fa fa-folder"></i>
+              <span>订单</span>
+            </router-link>
+          </li>
+
           <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+            <a href="#"><i class="fa fa-tasks"></i> <span>工作</span>
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><router-link to="/task">任务</router-link></li>
+            </ul>
+          </li>
+
+          <li class="treeview">
+            <a href="#"><i class="fa fa-link"></i> <span>仓库</span>
               <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -107,6 +130,17 @@
             <ul class="treeview-menu">
               <li><a href="#">Link in level 2</a></li>
               <li><a href="#">Link in level 2</a></li>
+            </ul>
+          </li>
+
+          <li class="treeview">
+            <a href="#"><i class="fa fa-bar-chart"></i> <span>财务</span>
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><router-link to="/sale">销售报告</router-link></li>
             </ul>
           </li>
         </ul>
@@ -120,8 +154,8 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Page Header
-          <small>Optional description</small>
+          {{$route.name.toUpperCase()}}
+          <small>{{ $route.meta.description }}</small>
         </h1>
         <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -131,9 +165,8 @@
 
       <!-- Main content -->
       <section class="content">
-
         <!-- Your Page Content Here -->
-
+        <router-view></router-view>
       </section>
       <!-- /.content -->
     </div>
