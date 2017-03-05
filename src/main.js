@@ -3,11 +3,23 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import $ from 'jquery'
-import '../static/css/bootstrap-datetimepicker.min.css'
-import '../static/js/bootstrap-datetimepicker.min'
-import '../static/js/bootstrap-datetimepicker.zh-CN'
 
+import 'jquery/dist/jquery.min'
+import $ from 'jquery'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.min'
+import '../static/js/app.min'
+
+import '../static/js/plugins/datetimepicker/bootstrap-datetimepicker.min.css'
+import '../static/js/plugins/datetimepicker/bootstrap-datetimepicker.min'
+import '../static/js/plugins/datetimepicker/bootstrap-datetimepicker.zh-CN'
+
+import '../static/js/plugins/datatables/jquery.dataTables'
+// import '../static/js/plugins/datatables/jquery.dataTables.min.css'
+import '../static/js/plugins/datatables/dataTables.bootstrap'
+import '../static/js/plugins/datatables/dataTables.bootstrap.css'
+
+import '../static/js/plugins/edtiable/mindmup-editabletable'
 
 
 Vue.config.productionTip = false

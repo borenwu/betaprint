@@ -6,6 +6,7 @@ import TaskView from '@/components/work/TaskView'
 import HomeView from '@/components/home/HomeView'
 import SaleView from '@/components/finance/SaleView'
 import WarehouseView from '@/components/warehouse/WarehouseView'
+import DemoTest from '@/components/demotest/DemoTest'
 import App from '@/App'
 
 Vue.use(Router)
@@ -41,6 +42,11 @@ export default new Router({
       path: '/home',
       name: 'HomeView',
       component: HomeView
+    },
+    {
+      path: '/demotest',
+      name: 'demotest',
+      component: DemoTest
     },
   ]
 })

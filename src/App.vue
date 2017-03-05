@@ -143,6 +143,14 @@
               <li><router-link to="/sale">销售报告</router-link></li>
             </ul>
           </li>
+
+          <!--demo test link-->
+          <li>
+            <router-link to="/demotest">
+              <i class="fa fa-folder"></i>
+              <span>demotest</span>
+            </router-link>
+          </li>
         </ul>
         <!-- /.sidebar-menu -->
       </section>
