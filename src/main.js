@@ -19,7 +19,11 @@ import '../static/js/plugins/datatables/jquery.dataTables'
 import '../static/js/plugins/datatables/dataTables.bootstrap'
 import '../static/js/plugins/datatables/dataTables.bootstrap.css'
 
-import '../static/js/plugins/edtiable/mindmup-editabletable'
+import '../static/js/plugins/editable/mindmup-editabletable'
+
+import VueEditable from '../static/js/plugins/vue-editable/vue-editable'
+
+Vue.use(VueEditable)
 
 
 Vue.config.productionTip = false
