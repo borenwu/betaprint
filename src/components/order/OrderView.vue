@@ -251,6 +251,12 @@
     },
 
     methods: {
+      getDateString(value){
+        if (!value) return ''
+        value = value.toString()
+        return value.split(" ")[0]
+      },
+
       handleEdit: function (order) {
         this.rowtemplate = order;
       },
