@@ -3,6 +3,7 @@
     <!--<h1 class="text-center">订单</h1>-->
     <section class="content">
       <div class="row">
+        <!--order form-->
         <div class="col-md-12">
           <div class="box box-info">
             <div class="box-header with-border">
@@ -44,7 +45,7 @@
 
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-calendar"></i> 交付日期</span>
-                <input type="text" style="width: 100%" id="duedate"/>
+                <input type="text" style="width: 100%" class="duedate"/>
               </div>
               <br>
 
@@ -53,7 +54,7 @@
                 <textarea class="form-control" rows="3" placeholder="请输入 ..." v-model="description"></textarea>
               </div>
 
-              <button class="btn btn-block btn-social btn-facebook" v-on:click="handleSubmit">
+              <button type="submit" class="btn btn-block btn-social btn-facebook" v-on:click="handleSubmit">
                 <i class="fa fa-send-o"></i>提交订单
               </button>
             </div>
@@ -102,40 +103,106 @@
                       <tbody>
 
                       <tr role="row" v-for="order in orders">
-                        <td class="sorting_1">{{order.order_date}}</td>
+                        <td class="sorting_1">{{order.order_date | getDate}}</td>
                         <td class="sorting_1">{{order.clientname}}</td>
                         <td class="sorting_1">{{order.taskname}}</td>
                         <td class="sorting_1">{{order.amount}}</td>
                         <td class="sorting_1">{{order.bookbind}}</td>
-                        <td class="sorting_1">{{order.due_date}}</td>
+                        <td class="sorting_1">{{order.due_date | getDate}}</td>
                         <td class="sorting_1">{{order.description}}</td>
                         <td class="sorting_1">
                           <div class="row">
-                            <div class="col-sm-6">
-                              <button>update</button>
+                            <div class="col-sm-3">
+                              <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" v-on:click="handleEdit(order)">
+                                编辑
+                              </button>
                             </div>
-                            <div class="col-sm-6">
-                              <button>delete</button>
+                            <div class="col-sm-3">
+                              <button class="btn btn-danger" v-on:click="handleDeleteOrder(order)">删除</button>
                             </div>
                           </div>
                         </td>
                       </tr>
-
                       </tbody>
-                      <!--<tfoot>-->
-                      <!--<tr>-->
-                      <!--<th colspan="1" rowspan="1">Rendering engine</th>-->
-                      <!--<th colspan="1" rowspan="1">Browser</th>-->
-                      <!--<th colspan="1" rowspan="1">Platform(s)</th>-->
-                      <!--<th colspan="1" rowspan="1">Engine version</th>-->
-                      <!--<th colspan="1" rowspan="1">CSS grade</th>-->
-                      <!--</tr>-->
-                      <!--</tfoot>-->
                     </table>
                   </div>
                 </div>
               </div>
               <!-- /.box-body -->
+            </div>
+          </div>
+        </div>
+
+        <!--update editor-->
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Update Order</h4>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="box box-info">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">修改订单</h3>
+                      </div>
+
+                      <div class="box-body">
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-group"></i></span>
+                          <input class="form-control" type="text" v-model="rowtemplate.clientname">
+                        </div>
+                        <br/>
+
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-keyboard-o"></i></span>
+                          <input class="form-control"  type="text" v-model="rowtemplate.taskname">
+                        </div>
+                        <br/>
+
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i> 印刷量</span>
+                          <input class="form-control"  type="number" v-model="rowtemplate.amount">
+                        </div>
+                        <br>
+
+                        <!-- select examples -->
+                        <div class="form-group">
+                          <label>装订方式</label>
+                          <select class="form-control" v-model="rowtemplate.bookbind">
+                            <option>无</option>
+                            <option>平钉</option>
+                            <option>骑马钉</option>
+                            <option>无线胶装</option>
+                            <option>锁线胶装</option>
+                            <option>精装</option>
+                          </select>
+                        </div>
+                        <br/>
+
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-calendar"></i> 交付日期</span>
+                          <input type="text" style="width: 100%" class="duedate" v-model="rowtemplate.due_date"/>
+                        </div>
+                        <br>
+
+                        <div class="form-group">
+                          <label>任务描述</label>
+                          <textarea class="form-control" rows="3" placeholder="请输入 ..." v-model="rowtemplate.description"></textarea>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" v-on:click="handleUpdateOrder(rowtemplate)">保存</button>
+              </div>
             </div>
           </div>
         </div>
@@ -155,14 +222,39 @@
         msg: 'hello order',
         clientname: "",
         taskname: "",
-        amount: null,
+        amount: 0,
 //        duedate: "",
         bookbind: "",
         description: "",
         orders: [],
+
+        rowtemplate: {
+          id: 0,
+          SN: '',
+          clientname: '',
+          taskname: '',
+          amount: 0,
+          bookbind: '',
+          description: '',
+          due_date: '',
+          status: false
+        }
       }
     },
+
+    filters: {
+      getDate: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.split(" ")[0]
+      }
+    },
+
     methods: {
+      handleEdit: function (order) {
+        this.rowtemplate = order;
+      },
+
       todayOrder(){
         var vm = this
         console.log('mounted')
@@ -201,6 +293,44 @@
         })
       },
 
+      deleteOrder(id, sn){
+        var vm = this;
+        $.ajax({
+          type: 'post',
+          url: 'http://192.168.1.131:5000/order/delete',
+          data: {
+            id: id,
+            sn: sn,
+          }
+        }).done(function (resp) {
+          if (resp.status == "success") {
+            vm.todayOrder()
+          }
+        })
+      },
+
+      updateOrder(id, sn, clientname, taskname, amount, bookbind, description, duedate){
+        var vm = this;
+        $.ajax({
+          type: 'post',
+          url: 'http://192.168.1.131:5000/order/update',
+          data: {
+            id: id,
+            sn: sn,
+            clientname: clientname,
+            taskname: taskname,
+            amount: amount,
+            bookbind: bookbind,
+            description: description,
+            duedate: duedate
+          }
+        }).done(function (resp) {
+          if (resp.status == "success") {
+            vm.todayOrder()
+          }
+        })
+      },
+
       handleSubmit(e){
         e.preventDefault();
         var duedate = $('#duedate').val()
@@ -214,6 +344,14 @@
 //        console.log("description: "+this.description)
       },
 
+      handleUpdateOrder(order){
+        console.log('update order start!')
+        this.updateOrder(order.id, order.SN, order.clientname, order.taskname, order.amount, order.bookbind, order.description, order.due_date)
+      },
+
+      handleDeleteOrder(order){
+        this.deleteOrder(order.id, order.SN)
+      }
     },
     components: {},
     created(){
@@ -259,8 +397,7 @@
 //
       $('#example').editableTableWidget();
 
-      var vm = this
-      $('#duedate').datetimepicker({
+      $('.duedate').datetimepicker({
         language: 'zh-CN',
         format: 'yyyy-mm-dd',
         weekStart: 1,
