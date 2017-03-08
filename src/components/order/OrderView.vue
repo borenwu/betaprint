@@ -147,7 +147,7 @@
                           <div class="container-fluid">
                             <div class="btn-group">
                               <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"
-                                      @click="handleEdit(order,index)">
+                                      @click="handleEdit(order)">
                                 编辑
                               </button>
                               <button class="btn btn-danger btn-sm" @click="handleDeleteOrder(order,index)">删除</button>
@@ -273,14 +273,6 @@
       }
     },
 
-    filters: {
-      getDate: function (value) {
-        if (!value) return ''
-        value = value.toString()
-        return value.split(" ")[0]
-      }
-    },
-
     methods: {
 
       formatDate(date) {
@@ -295,15 +287,9 @@
         return [year, month, day].join('-');
       },
 
-      getDateString(value){
-        if (!value) return ''
-        value = value.toString()
-        return value.split(" ")[0]
-      },
-
-      handleEdit(order,index) {
+      handleEdit(order) {
         console.log(order)
-//        this.rowtemplate = order;
+        this.rowtemplate = order;
 //        console.log(this.rowtemplate)
 //        this.rowtemplate.index = index;
       },
