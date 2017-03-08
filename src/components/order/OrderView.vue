@@ -45,7 +45,7 @@
 
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-calendar"></i> 交付日期</span>
-                <input type="text" style="width: 100%" class="duedate"/>
+                <input type="text" style="width: 100%" class="datetime" id="newDueDate"/>
               </div>
               <br>
 
@@ -54,18 +54,51 @@
                 <textarea class="form-control" rows="3" placeholder="请输入 ..." v-model="description"></textarea>
               </div>
 
-              <button type="submit" class="btn btn-block btn-social btn-facebook" v-on:click="handleSubmit">
+              <button type="submit" class="btn btn-block btn-social btn-facebook" v-on:click="handleAddOrder">
                 <i class="fa fa-send-o"></i>提交订单
               </button>
             </div>
           </div>
         </div>
 
+        <!--search calendar-->
+        <div class="col-md-12">
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">搜索订单</h3>
+            </div>
+
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i> 起始日期</span>
+                    <input type="text" style="width: 100%" class="datetime" id="startDate"/>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i> 终止日期</span>
+                    <input type="text" style="width: 100%" class="datetime" id="endDate"/>
+                  </div>
+                </div>
+
+                <button type="button" class="btn btn-info btn-flat btn-sm" v-on:click="handleSearchOrder()">
+                  <i class="fa  fa-search"></i>
+                  检索
+                </button>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
         <!--order table-->
         <div class="col-md-12">
-          <div class="box">
+          <div class="box box-danger">
             <div class="box-header">
-              <h3 class="box-title">Data Table With Full Features</h3>
+              <h3 class="box-title">订单列表</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -111,14 +144,14 @@
                         <td class="sorting_1">{{order.due_date | getDate}}</td>
                         <td class="sorting_1">{{order.description}}</td>
                         <td class="sorting_1">
-                          <div class="row">
-                            <div class="col-sm-3">
-                              <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" v-on:click="handleEdit(order)">
+                          <div class="container-fluid">
+                            <div class="btn-group">
+                              <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"
+                                      @click="handleEdit(order)">
                                 编辑
                               </button>
-                            </div>
-                            <div class="col-sm-3">
-                              <button class="btn btn-danger" v-on:click="handleDeleteOrder(order)">删除</button>
+                              <button class="btn btn-danger btn-sm" @click="handleDeleteOrder(order)">删除</button>
+                              <button class="btn btn-success btn-sm" :disabled="order.status" @click="handleFinishOrder(order)">完成</button>
                             </div>
                           </div>
                         </td>
@@ -139,7 +172,8 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                  aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Update Order</h4>
               </div>
               <div class="modal-body">
@@ -159,13 +193,13 @@
 
                         <div class="input-group">
                           <span class="input-group-addon"><i class="fa fa-keyboard-o"></i></span>
-                          <input class="form-control"  type="text" v-model="rowtemplate.taskname">
+                          <input class="form-control" type="text" v-model="rowtemplate.taskname">
                         </div>
                         <br/>
 
                         <div class="input-group">
                           <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i> 印刷量</span>
-                          <input class="form-control"  type="number" v-model="rowtemplate.amount">
+                          <input class="form-control" type="number" v-model="rowtemplate.amount">
                         </div>
                         <br>
 
@@ -185,15 +219,15 @@
 
                         <div class="input-group">
                           <span class="input-group-addon"><i class="fa fa-calendar"></i> 交付日期</span>
-                          <input type="text" style="width: 100%" class="duedate" v-model="rowtemplate.due_date"/>
+                          <input type="text" style="width: 100%" class="datetime" id="updateDuedate" v-model="rowtemplate.due_date"/>
                         </div>
                         <br>
 
                         <div class="form-group">
                           <label>任务描述</label>
-                          <textarea class="form-control" rows="3" placeholder="请输入 ..." v-model="rowtemplate.description"></textarea>
+                          <textarea class="form-control" rows="3" placeholder="请输入 ..."
+                                    v-model="rowtemplate.description"></textarea>
                         </div>
-
                       </div>
                     </div>
                   </div>
@@ -201,7 +235,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" v-on:click="handleUpdateOrder(rowtemplate)">保存</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="handleUpdateOrder(rowtemplate)">保存</button>
               </div>
             </div>
           </div>
@@ -216,6 +250,7 @@
 
 <script>
   import $ from 'jquery'
+
   export default{
     data(){
       return {
@@ -223,7 +258,7 @@
         clientname: "",
         taskname: "",
         amount: 0,
-//        duedate: "",
+        duedate: "",
         bookbind: "",
         description: "",
         orders: [],
@@ -251,6 +286,19 @@
     },
 
     methods: {
+
+      formatDate(date) {
+        var d = new Date(date),
+          month = '' + (d.getMonth() + 1),
+          day = '' + d.getDate(),
+          year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+      },
+
       getDateString(value){
         if (!value) return ''
         value = value.toString()
@@ -263,12 +311,10 @@
 
       todayOrder(){
         var vm = this
-        console.log('mounted')
         $.ajax({
           type: 'get',
           url: 'http://192.168.1.131:5000/order/look'
         }).done(function (resp) {
-          console.log(resp.results.length)
           if (resp.results.length > 0) {
             vm.orders = resp.results
           }
@@ -276,6 +322,25 @@
             vm.order = []
           }
 
+        })
+      },
+
+      searchOrder(startDate, endDate){
+        var vm = this;
+        $.ajax({
+          type: 'post',
+          url: 'http://192.168.1.131:5000/order/look',
+          data: {
+            startDate: startDate,
+            endDate: endDate
+          }
+        }).done(function (resp) {
+          if (resp.results.length > 0) {
+            vm.orders = resp.results
+          }
+          else {
+            vm.order = []
+          }
         })
       },
 
@@ -332,31 +397,53 @@
           }
         }).done(function (resp) {
           if (resp.status == "success") {
+            alert('success')
             vm.todayOrder()
           }
         })
       },
 
-      handleSubmit(e){
-        e.preventDefault();
-        var duedate = $('#duedate').val()
+      finishOrder(id,sn){
+        var vm = this;
+        $.ajax({
+          type: 'post',
+          url: 'http://192.168.1.131:5000/order/finish',
+          data: {
+            id: id,
+            sn: sn,
+          }
+        }).done(function (resp) {
+          if (resp.status == "success") {
+            alert('finish')
+            vm.todayOrder()
+          }
+        })
+      },
 
-        this.addOrder(this.clientname, this.taskname, this.amount, duedate, this.bookbind, this.description)
-//        console.log("clientname: "+this.clientname)
-//        console.log("taskname: "+this.taskname)
-//        console.log("amount: "+this.amount)
-//        console.log("duedate: "+$('#datetimepicker').val())
-//        console.log("bookbind: "+this.bookbind)
-//        console.log("description: "+this.description)
+      handleAddOrder(e){
+        e.preventDefault();
+        var vm = this
+
+        this.addOrder(vm.clientname, vm.taskname, vm.amount, vm.duedate, vm.bookbind, vm.description)
+      },
+
+      handleSearchOrder(){
+        var vm = this
+        var startDate = $('#startDate').val()
+        var endDate = $('#endDate').val()
+        this.searchOrder(startDate, endDate)
       },
 
       handleUpdateOrder(order){
-        console.log('update order start!')
         this.updateOrder(order.id, order.SN, order.clientname, order.taskname, order.amount, order.bookbind, order.description, order.due_date)
       },
 
       handleDeleteOrder(order){
         this.deleteOrder(order.id, order.SN)
+      },
+
+      handleFinishOrder(order){
+        this.finishOrder(order.id, order.SN)
       }
     },
     components: {},
@@ -364,7 +451,7 @@
       this.todayOrder();
     },
     mounted() {
-
+        var vm = this;
 //      $('#example').DataTable({
 //        "language": {
 //          "processing": "处理中...",
@@ -403,7 +490,7 @@
 //
       $('#example').editableTableWidget();
 
-      $('.duedate').datetimepicker({
+      $('.datetime').datetimepicker({
         language: 'zh-CN',
         format: 'yyyy-mm-dd',
         weekStart: 1,
@@ -413,7 +500,21 @@
         startView: 2,
         minView: 2,
         forceParse: 0
-      })
+      }).on('changeDate', function (ev) {
+        var id = ev.delegateTarget.id
+        if(id == 'newDueDate'){
+          var time = ev.date;
+          var newDate = new Date();
+          newDate.setTime(time);
+          vm.duedate = vm.formatDate(newDate)
+        }
+        if(id == 'updateDuedate'){
+          var time = ev.date;
+          var newDate = new Date();
+          newDate.setTime(time);
+          vm.rowtemplate.due_date = vm.formatDate(newDate)
+        }
+      });
 
 
 //      $('#demo').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"></table>');
