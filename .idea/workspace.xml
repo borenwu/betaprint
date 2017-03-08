@@ -54,17 +54,17 @@
       <file leaf-file-name="OrderView.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/order/OrderView.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="368" column="16" lean-forward="true" selection-start-line="368" selection-start-column="16" selection-end-line="368" selection-end-column="16" />
+            <state relative-caret-position="2738">
+              <caret line="270" column="22" lean-forward="false" selection-start-line="270" selection-start-column="22" selection-end-line="270" selection-end-column="22" />
               <folding>
                 <element signature="n#div#0;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#input#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#div#1;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#div#2;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-                <element signature="e#6987#6994#0" expanded="true" />
+                <element signature="e#7076#7083#0" expanded="true" />
                 <element signature="n#style#0;n#input#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#10683#10830#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -85,6 +85,7 @@
       <find>format</find>
       <find>var vm</find>
       <find>console.lo</find>
+      <find>handleEdit</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -340,7 +341,7 @@
       <workItem from="1488683755580" duration="9534000" />
       <workItem from="1488765495426" duration="14572000" />
       <workItem from="1488853755287" duration="12585000" />
-      <workItem from="1488939989940" duration="11127000" />
+      <workItem from="1488939989940" duration="15733000" />
     </task>
     <task id="LOCAL-00001" summary="first change">
       <created>1488527662724</created>
@@ -370,11 +371,18 @@
       <option name="project" value="LOCAL" />
       <updated>1488875753313</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="order CRUD almost good">
+      <created>1488955758892</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1488955758892</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74446000" />
+    <option name="totallyTimeSpent" value="79052000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
@@ -436,7 +444,8 @@
     <MESSAGE value="first change" />
     <MESSAGE value="table change" />
     <MESSAGE value="order CRUD finish! but now bootstrap-data-tables is not good" />
-    <option name="LAST_COMMIT_MESSAGE" value="order CRUD finish! but now bootstrap-data-tables is not good" />
+    <MESSAGE value="order CRUD almost good" />
+    <option name="LAST_COMMIT_MESSAGE" value="order CRUD almost good" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -462,9 +471,9 @@
             <element signature="n#div#1;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#div#2;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="e#6987#6994#0" expanded="true" />
+            <element signature="e#7076#7083#0" expanded="true" />
             <element signature="n#style#0;n#input#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#10683#10830#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -770,17 +779,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/order/OrderView.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="368" column="16" lean-forward="true" selection-start-line="368" selection-start-column="16" selection-end-line="368" selection-end-column="16" />
+        <state relative-caret-position="2738">
+          <caret line="270" column="22" lean-forward="false" selection-start-line="270" selection-start-column="22" selection-end-line="270" selection-end-column="22" />
           <folding>
             <element signature="n#div#0;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#input#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#div#1;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#div#2;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="e#6987#6994#0" expanded="true" />
+            <element signature="e#7076#7083#0" expanded="true" />
             <element signature="n#style#0;n#input#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#section#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#10683#10830#0" expanded="false" />
           </folding>
         </state>
       </provider>

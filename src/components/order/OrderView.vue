@@ -135,7 +135,7 @@
                       </thead>
                       <tbody>
 
-                      <tr role="row" v-for="order in orders">
+                      <tr role="row" v-for="(order,index) in orders">
                         <td class="sorting_1">{{order.order_date | getDate}}</td>
                         <td class="sorting_1">{{order.clientname}}</td>
                         <td class="sorting_1">{{order.taskname}}</td>
@@ -147,11 +147,13 @@
                           <div class="container-fluid">
                             <div class="btn-group">
                               <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"
-                                      @click="handleEdit(order)">
+                                      @click="handleEdit(order,index)">
                                 编辑
                               </button>
-                              <button class="btn btn-danger btn-sm" @click="handleDeleteOrder(order)">删除</button>
-                              <button class="btn btn-success btn-sm" :disabled="order.status" @click="handleFinishOrder(order)">完成</button>
+                              <button class="btn btn-danger btn-sm" @click="handleDeleteOrder(order,index)">删除</button>
+                              <button class="btn btn-success btn-sm" :disabled="order.status"
+                                      @click="handleFinishOrder(order)">完成
+                              </button>
                             </div>
                           </div>
                         </td>
@@ -219,7 +221,8 @@
 
                         <div class="input-group">
                           <span class="input-group-addon"><i class="fa fa-calendar"></i> 交付日期</span>
-                          <input type="text" style="width: 100%" class="datetime" id="updateDuedate" v-model="rowtemplate.due_date"/>
+                          <input type="text" style="width: 100%" class="datetime" id="updateDuedate"
+                                 v-model="rowtemplate.due_date"/>
                         </div>
                         <br>
 
@@ -235,7 +238,9 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="handleUpdateOrder(rowtemplate)">保存</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        @click="handleUpdateOrder(rowtemplate)">保存
+                </button>
               </div>
             </div>
           </div>
@@ -264,15 +269,6 @@
         orders: [],
 
         rowtemplate: {
-          id: 0,
-          SN: '',
-          clientname: '',
-          taskname: '',
-          amount: 0,
-          bookbind: '',
-          description: '',
-          due_date: '',
-          status: false
         }
       }
     },
@@ -305,8 +301,9 @@
         return value.split(" ")[0]
       },
 
-      handleEdit: function (order) {
+      handleEdit(order,index) {
         this.rowtemplate = order;
+        this.rowtemplate.index = index;
       },
 
       todayOrder(){
@@ -319,7 +316,7 @@
             vm.orders = resp.results
           }
           else {
-            vm.order = []
+            vm.orders = []
           }
 
         })
@@ -364,7 +361,7 @@
         })
       },
 
-      deleteOrder(id, sn){
+      deleteOrder(id, sn, index){
         var vm = this;
         $.ajax({
           type: 'post',
@@ -375,7 +372,7 @@
           }
         }).done(function (resp) {
           if (resp.status == "success") {
-            vm.todayOrder()
+            vm.orders.splice( index, 1 );
           }
         })
       },
@@ -403,7 +400,7 @@
         })
       },
 
-      finishOrder(id,sn){
+      finishOrder(id, sn){
         var vm = this;
         $.ajax({
           type: 'post',
@@ -438,8 +435,9 @@
         this.updateOrder(order.id, order.SN, order.clientname, order.taskname, order.amount, order.bookbind, order.description, order.due_date)
       },
 
-      handleDeleteOrder(order){
-        this.deleteOrder(order.id, order.SN)
+      handleDeleteOrder(order, index){
+        console.log(index)
+        this.deleteOrder(order.id, order.SN, index)
       },
 
       handleFinishOrder(order){
@@ -451,7 +449,7 @@
       this.todayOrder();
     },
     mounted() {
-        var vm = this;
+      var vm = this;
 //      $('#example').DataTable({
 //        "language": {
 //          "processing": "处理中...",
@@ -502,13 +500,13 @@
         forceParse: 0
       }).on('changeDate', function (ev) {
         var id = ev.delegateTarget.id
-        if(id == 'newDueDate'){
+        if (id == 'newDueDate') {
           var time = ev.date;
           var newDate = new Date();
           newDate.setTime(time);
           vm.duedate = vm.formatDate(newDate)
         }
-        if(id == 'updateDuedate'){
+        if (id == 'updateDuedate') {
           var time = ev.date;
           var newDate = new Date();
           newDate.setTime(time);
