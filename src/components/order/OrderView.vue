@@ -136,13 +136,13 @@
                       <tbody>
 
                       <tr role="row" v-for="(order,index) in orders">
-                        <td class="sorting_1">{{order.order_date | getDate}}</td>
-                        <td class="sorting_1">{{order.clientname}}</td>
-                        <td class="sorting_1">{{order.taskname}}</td>
-                        <td class="sorting_1">{{order.amount}}</td>
-                        <td class="sorting_1">{{order.bookbind}}</td>
-                        <td class="sorting_1">{{order.due_date | getDate}}</td>
-                        <td class="sorting_1">{{order.description}}</td>
+                        <td >{{order.order_date}}</td>
+                        <td >{{order.clientname}}</td>
+                        <td >{{order.taskname}}</td>
+                        <td >{{order.amount}}</td>
+                        <td >{{order.bookbind}}</td>
+                        <td >{{order.due_date}}</td>
+                        <td >{{order.description}}</td>
                         <td class="sorting_1">
                           <div class="container-fluid">
                             <div class="btn-group">
@@ -302,8 +302,10 @@
       },
 
       handleEdit(order,index) {
-        this.rowtemplate = order;
-        this.rowtemplate.index = index;
+        console.log(order)
+//        this.rowtemplate = order;
+//        console.log(this.rowtemplate)
+//        this.rowtemplate.index = index;
       },
 
       todayOrder(){
