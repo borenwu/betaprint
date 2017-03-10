@@ -1,92 +1,116 @@
 <template>
-  <div class="row">
-    <div class="col s12 m12 l12">
-      <div class="card">
-        <div class="card-content">
-          <h4>今日销售</h4>
-          <div class="divider"/>
-          <br/>
+  <section class="content">
+    <div class="row">
+      <!--search calendar-->
+      <div class="col-md-12">
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">搜索订单</h3>
+          </div>
 
-          <div class="row search-bar">
+          <div class="box-body">
             <div class="row">
-              <div class="input-field col s6">
-                <label>起始日期</label>
-                <input type="date" class="datepick">
-              </div>
-
-              <div class="input-field col s6">
-                <label>终止日期</label>
-                <input type="date" class="datepick">
-              </div>
-
-              <div class="row">
-                <div class="input-field col s11">
-                  <a class="waves-effect waves-light btn cyan right"><i class="material-icons left">search</i>检索</a>
+              <div class="col-md-3">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i> 起始日期</span>
+                  <input type="text" style="width: 100%" class="datetime" id="startDate"/>
                 </div>
               </div>
+              <div class="col-md-3">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i> 终止日期</span>
+                  <input type="text" style="width: 100%" class="datetime" id="endDate"/>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-info btn-flat btn-sm" @click="handleSearchOrder()">
+                <i class="fa  fa-search"></i>
+                检索
+              </button>
 
             </div>
           </div>
 
-          <div class="divider"/>
-          <br/>
-          <div class="row sale-table">
-            <table>
-              <thead>
-              <tr>
-                <th data-field="id">客户</th>
-                <th data-field="id">任务名称</th>
-                <th data-field="id">印刷量</th>
-                <th data-field="name">单价</th>
-                <th data-field="price">总价</th>
-              </tr>
-              </thead>
+        </div>
+      </div>
 
-              <tbody>
-              <tr>
-                <td>{{client}}</td>
-                <td>{{taskName}}</td>
-                <td>{{number}}</td>
-                <td>
-                  <div class="input-field inline">
-                    <input type="number" v-model="price" placeholder="单价">
+      <!--order table-->
+      <div class="col-md-12">
+        <div class="box box-danger">
+          <div class="box-header">
+            <h3 class="box-title">订单列表</h3>
+            <button class="btn btn-info btn-flat" @click="handleSaleOrder">Save</button>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div class="dataTables_wrapper form-inline dt-bootstrap" id="example1_wrapper">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div id="example1_length" class="dataTables_length">
                   </div>
-                  元
-                </td>
-                <td>{{calTotal()}}元</td>
-              </tr>
-              <tr>
-                <td>{{client}}</td>
-                <td>{{taskName}}</td>
-                <td>{{number}}</td>
-                <td>
-                  <div class="input-field inline">
-                    <input type="number" v-model="price" placeholder="单价">
-                  </div>
-                  元
-                </td>
-                <td>{{calTotal()}}元</td>
-              </tr>
-              <tr>
-                <td>{{client}}</td>
-                <td>{{taskName}}</td>
-                <td>{{number}}</td>
-                <td>
-                  <div class="input-field inline">
-                    <input type="number" v-model="price" placeholder="单价">
-                  </div>
-                  元
-                </td>
-                <td>{{calTotal()}}元</td>
-              </tr>
-              </tbody>
-            </table>
+                </div>
+              </div>
 
+              <div class="row">
+                <div class="col-sm-12 table-responsive" id="demo">
+                  <table id="example" class="table table-striped table-hover table-bordered">
+                    <thead>
+                    <tr role="row">
+                      <th>创建日期
+                      </th>
+                      <th>客户
+                      </th>
+                      <th>任务
+                      </th>
+                      <th>印刷量
+                      </th>
+                      <th>装订方式
+                      </th>
+                      <th>交付日期
+                      </th>
+                      <th>任务描述
+                      </th>
+                      <th>完成情况
+                      </th>
+                      <th>单价
+                      </th>
+                      <th>总价
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr role="row" v-for="(order,index) in orders">
+                      <td>{{order.order_date}}</td>
+                      <td>{{order.clientname}}</td>
+                      <td>{{order.taskname}}</td>
+                      <td>{{order.amount}}</td>
+                      <td>{{order.bookbind}}</td>
+                      <td>{{order.due_date}}</td>
+                      <td>{{order.description}}</td>
+                      <td>{{getStatus(order)}}</td>
+                      <!--<td>{{order.price}}</td>-->
+                      <!--<td>{{order.sale}}</td>-->
+                      <td>
+                        <div class="input-field inline">
+                          <input type="number" v-model="order.price" placeholder="单价">
+                        </div>
+                        元
+                      </td>
+                      </td>
+                      <td>{{calTotal(order)}}元</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- /.box-body -->
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style>
@@ -94,39 +118,134 @@
 </style>
 
 <script>
+  var appconfig = require('../../../static/config/config.json')
+  var rootUrl = appconfig.rootUrl
 
   export default{
     data(){
       return {
         msg: 'hello sale',
-        client:"如皋日报",
-        taskName:"如皋日报",
-        number: 5,
-        totalPrice: 0.0,
-        price: 0.0
+//        client: "如皋日报",
+//        taskName: "如皋日报",
+//        number: 5,
+//        totalPrice: 0.0,
+        orders: [],
       }
     },
+    computed: {},
     components: {},
+    watch:{
+
+    },
     methods: {
-      calTotal(){
-        return this.price * this.number
+      getStatus(order){
+        if (order.status == true) {
+          return "已完成"
+        }
+        else {
+          return "未完成"
+        }
+      },
+
+      calTotal(order){
+        var vm = this;
+        order.sale = order.price * order.amount
+        return order.sale
+      },
+
+      todayOrder(){
+        var vm = this
+        $.ajax({
+          type: 'get',
+          url: rootUrl+'/order/look'
+        }).done(function (resp) {
+          if (resp.results.length > 0) {
+            vm.orders = resp.results
+          }
+          else {
+            vm.orders = []
+          }
+
+        })
+      },
+
+      searchOrder(startDate, endDate){
+        var vm = this;
+        $.ajax({
+          type: 'post',
+          url: rootUrl+'/order/look',
+          data: {
+            startDate: startDate,
+            endDate: endDate
+          }
+        }).done(function (resp) {
+          if (resp.results.length > 0) {
+            vm.orders = resp.results
+          }
+          else {
+            vm.order = []
+          }
+        })
+      },
+
+      saleOrder(){
+        console.log("sale order start!")
+        var vm = this
+        var orderList = JSON.stringify(vm.orders)
+        $.ajax({
+          type: 'post',
+          url: rootUrl+'/order/sale',
+          data: {
+            saleOrders: orderList
+          }
+        }).done(function (resp) {
+          if (resp.status == "success") {
+            console.log("success")
+          }
+        })
+      },
+
+
+      handleSearchOrder(){
+        var vm = this
+        var startDate = $('#startDate').val()
+        var endDate = $('#endDate').val()
+        this.searchOrder(startDate, endDate)
+      },
+
+      handleSaleOrder(){
+          this.saleOrder();
       }
     },
     mounted(){
-      $('.datepick').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15, // Creates a dropdown of 15 years to control year
+      var vm = this
+      vm.todayOrder()
+
+      $('.datetime').datetimepicker({
+        language: 'zh-CN',
         format: 'yyyy-mm-dd',
-        weekdaysLetter: ['日', '一', '二', '三', '四', '五', '六'],
-        today: '今天',
-        clear: '清除',
-        close: '关闭',
-        monthsFull: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-        monthsShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-        weekdaysFull: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-        weekdaysShort: ['日', '一', '二', '三', '四', '五', '六'],
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+      }).on('changeDate', function (ev) {
+        var id = ev.delegateTarget.id
+        if (id == 'newDueDate') {
+          var time = ev.date;
+          var newDate = new Date();
+          newDate.setTime(time);
+          vm.duedate = vm.formatDate(newDate)
+        }
+        if (id == 'updateDuedate') {
+          var time = ev.date;
+          var newDate = new Date();
+          newDate.setTime(time);
+          vm.rowtemplate.due_date = vm.formatDate(newDate)
+        }
       });
-      $('.collapsible').collapsible();
     }
   }
 </script>

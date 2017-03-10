@@ -54,7 +54,7 @@
                 <textarea class="form-control" rows="3" placeholder="请输入 ..." v-model="description"></textarea>
               </div>
 
-              <button type="submit" class="btn btn-block btn-social btn-facebook" v-on:click="handleAddOrder">
+              <button type="submit" class="btn btn-block btn-social btn-facebook" @click="handleAddOrder">
                 <i class="fa fa-send-o"></i>提交订单
               </button>
             </div>
@@ -83,7 +83,7 @@
                   </div>
                 </div>
 
-                <button type="button" class="btn btn-info btn-flat btn-sm" v-on:click="handleSearchOrder()">
+                <button type="button" class="btn btn-info btn-flat btn-sm" @click="handleSearchOrder()">
                   <i class="fa  fa-search"></i>
                   检索
                 </button>
@@ -136,23 +136,23 @@
                       <tbody>
 
                       <tr role="row" v-for="(order,index) in orders">
-                        <td >{{order.order_date}}</td>
-                        <td >{{order.clientname}}</td>
-                        <td >{{order.taskname}}</td>
-                        <td >{{order.amount}}</td>
-                        <td >{{order.bookbind}}</td>
-                        <td >{{order.due_date}}</td>
-                        <td >{{order.description}}</td>
+                        <td>{{order.order_date}}</td>
+                        <td>{{order.clientname}}</td>
+                        <td>{{order.taskname}}</td>
+                        <td>{{order.amount}}</td>
+                        <td>{{order.bookbind}}</td>
+                        <td>{{order.due_date}}</td>
+                        <td>{{order.description}}</td>
                         <td class="sorting_1">
                           <div class="container-fluid">
                             <div class="btn-group">
                               <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"
-                                      @click="handleEdit(order)">
+                                      @click="handleEdit(order,index)">
                                 编辑
                               </button>
                               <button class="btn btn-danger btn-sm" @click="handleDeleteOrder(order,index)">删除</button>
                               <button class="btn btn-success btn-sm" :disabled="order.status"
-                                      @click="handleFinishOrder(order)">完成
+                                      @click="handleFinishOrder(order,index)">完成
                               </button>
                             </div>
                           </div>
@@ -255,6 +255,8 @@
 
 <script>
   import $ from 'jquery'
+  var appconfig = require('../../../static/config/config.json')
+  var rootUrl = appconfig.rootUrl
 
   export default{
     data(){
@@ -287,18 +289,13 @@
         return [year, month, day].join('-');
       },
 
-      handleEdit(order) {
-        console.log(order)
-        this.rowtemplate = order;
-//        console.log(this.rowtemplate)
-//        this.rowtemplate.index = index;
-      },
 
       todayOrder(){
+
         var vm = this
         $.ajax({
           type: 'get',
-          url: 'http://192.168.1.131:5000/order/look'
+          url: rootUrl+'/order/look'
         }).done(function (resp) {
           if (resp.results.length > 0) {
             vm.orders = resp.results
@@ -314,7 +311,7 @@
         var vm = this;
         $.ajax({
           type: 'post',
-          url: 'http://192.168.1.131:5000/order/look',
+          url: rootUrl+'/order/look',
           data: {
             startDate: startDate,
             endDate: endDate
@@ -333,7 +330,7 @@
         var vm = this;
         $.ajax({
           type: 'post',
-          url: 'http://192.168.1.131:5000/order/add',
+          url: rootUrl+'/order/add',
           data: {
             clientname: clientname,
             taskname: taskname,
@@ -353,23 +350,23 @@
         var vm = this;
         $.ajax({
           type: 'post',
-          url: 'http://192.168.1.131:5000/order/delete',
+          url: rootUrl+'/order/delete',
           data: {
             id: id,
             sn: sn,
           }
         }).done(function (resp) {
           if (resp.status == "success") {
-            vm.orders.splice( index, 1 );
+            vm.orders.splice(index, 1);
           }
         })
       },
 
-      updateOrder(id, sn, clientname, taskname, amount, bookbind, description, duedate){
+      updateOrder(id, sn, clientname, taskname, amount, bookbind, description, duedate,index){
         var vm = this;
         $.ajax({
           type: 'post',
-          url: 'http://192.168.1.131:5000/order/update',
+          url: rootUrl+'/order/update',
           data: {
             id: id,
             sn: sn,
@@ -383,16 +380,22 @@
         }).done(function (resp) {
           if (resp.status == "success") {
             alert('success')
-            vm.todayOrder()
+            var order = vm.orders[index]
+            order.clientname = clientname
+            order.taskname = taskname
+            order.amount = amount
+            order.bookbind = bookbind
+            order.description = description
+            order.due_date = duedate
           }
         })
       },
 
-      finishOrder(id, sn){
+      finishOrder(id, sn,index){
         var vm = this;
         $.ajax({
           type: 'post',
-          url: 'http://192.168.1.131:5000/order/finish',
+          url: rootUrl+'/order/finish',
           data: {
             id: id,
             sn: sn,
@@ -400,7 +403,8 @@
         }).done(function (resp) {
           if (resp.status == "success") {
             alert('finish')
-            vm.todayOrder()
+            var order = vm.orders[index]
+            order.status = true
           }
         })
       },
@@ -419,8 +423,17 @@
         this.searchOrder(startDate, endDate)
       },
 
-      handleUpdateOrder(order){
-        this.updateOrder(order.id, order.SN, order.clientname, order.taskname, order.amount, order.bookbind, order.description, order.due_date)
+      handleEdit(order,index) {
+        var vm = this
+        vm.rowtemplate = order;
+        vm.rowtemplate.index = index;
+      },
+
+      handleUpdateOrder(rowtemplate){
+        this.updateOrder(rowtemplate.id, rowtemplate.SN,
+          rowtemplate.clientname, rowtemplate.taskname,
+          rowtemplate.amount, rowtemplate.bookbind,
+          rowtemplate.description, rowtemplate.due_date,rowtemplate.index)
       },
 
       handleDeleteOrder(order, index){
@@ -428,16 +441,16 @@
         this.deleteOrder(order.id, order.SN, index)
       },
 
-      handleFinishOrder(order){
-        this.finishOrder(order.id, order.SN)
+      handleFinishOrder(order,index){
+        this.finishOrder(order.id, order.SN,index)
       }
     },
     components: {},
     created(){
-      this.todayOrder();
     },
     mounted() {
       var vm = this;
+      vm.todayOrder()
 //      $('#example').DataTable({
 //        "language": {
 //          "processing": "处理中...",
@@ -474,7 +487,6 @@
 //        }
 //      })
 //
-      $('#example').editableTableWidget();
 
       $('.datetime').datetimepicker({
         language: 'zh-CN',
