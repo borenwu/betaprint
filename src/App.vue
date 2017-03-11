@@ -26,42 +26,41 @@
               <!-- Menu Toggle Button -->
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <!-- The user image in the navbar-->
-                <img src="static/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                <img :src='loginUser.img' class="user-image" alt="User Image">
                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                <span class="hidden-xs">Alexander Pierce</span>
+                <span class="hidden-xs">{{loginUser.name}}</span>
               </a>
               <ul class="dropdown-menu">
                 <!-- The user image in the menu -->
                 <li class="user-header">
-                  <img src="static/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                  <img :src='loginUser.img' class="img-circle" alt="User Image">
 
                   <p>
-                    Alexander Pierce - Web Developer
-                    <small>Member since Nov. 2012</small>
+                    {{loginUser.role}}
                   </p>
                 </li>
                 <!-- Menu Body -->
-                <li class="user-body">
-                  <div class="row">
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Followers</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Sales</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Friends</a>
-                    </div>
-                  </div>
-                  <!-- /.row -->
-                </li>
+                <!--<li class="user-body">-->
+                  <!--<div class="row">-->
+                    <!--<div class="col-xs-4 text-center">-->
+                      <!--<a href="#">Followers</a>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-4 text-center">-->
+                      <!--<a href="#">Sales</a>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-4 text-center">-->
+                      <!--<a href="#">Friends</a>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--&lt;!&ndash; /.row &ndash;&gt;-->
+                <!--</li>-->
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
-                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    <a href="#" class="btn btn-default btn-flat">个人资料</a>
                   </div>
                   <div class="pull-right">
-                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    <a href="#" class="btn btn-default btn-flat">{{loginUser.buttonLabel}}</a>
                   </div>
                 </li>
               </ul>
@@ -279,15 +278,32 @@
     name: 'app',
     data(){
       return {
-        msg: 'hello app'
+        msg: 'hello app',
+        loginUser: {
+          img: '',
+          name: '',
+          role:'',
+          buttonLabel: ''
+        },
       }
     },
 
     methods: {
       checkLogin(){
+        console.log('no user')
+        var vm = this
         var user = this.$store.state.user
-        if(!user){
-            console.log('no user login')
+        if (!user) {
+          vm.loginUser.img = 'static/img/nouser.png'
+          vm.loginUser.name = '未登录'
+          vm.loginUser.role='请登录'
+          vm.loginUser.buttonLabel = '登陆'
+        }
+        else {
+          vm.loginUser.img = this.$store.state.user.img
+          vm.loginUser.name = this.$store.state.user.name
+          vm.loginUser.role= this.$store.state.user.role
+          vm.loginUser.buttonLabel = '登出'
         }
       },
 
