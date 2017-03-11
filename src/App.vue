@@ -284,6 +284,13 @@
     },
 
     methods: {
+      checkLogin(){
+        var user = this.$store.state.user
+        if(!user){
+            console.log('no user login')
+        }
+      },
+
       loginTest(){
         console.log('login start!')
         var store = this.$store
@@ -297,8 +304,9 @@
       }
     },
     components: {},
+
     mounted(){
-      this.loginTest()
+      this.checkLogin()
     }
 
   }
