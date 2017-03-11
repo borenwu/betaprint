@@ -117,7 +117,9 @@
             </span>
             </a>
             <ul class="treeview-menu">
-              <li><router-link to="/task">任务</router-link></li>
+              <li>
+                <router-link to="/task">任务</router-link>
+              </li>
             </ul>
           </li>
 
@@ -140,7 +142,9 @@
             </span>
             </a>
             <ul class="treeview-menu">
-              <li><router-link to="/sale">销售报告</router-link></li>
+              <li>
+                <router-link to="/sale">销售报告</router-link>
+              </li>
             </ul>
           </li>
 
@@ -278,9 +282,25 @@
         msg: 'hello app'
       }
     },
-    components: {
 
+    methods: {
+      loginTest(){
+        console.log('login start!')
+        var store = this.$store
+        var user = {
+          username: 'tales',
+          password: '123'
+        }
+        store.commit('SET_USER', user)
+        console.log('set user done!')
+        console.log(store.state.user)
+      }
+    },
+    components: {},
+    mounted(){
+      this.loginTest()
     }
+
   }
 </script>
 
