@@ -12,11 +12,11 @@ import LoginView from '@/components/Login'
 
 const routes = [
   {
-    path: '/login',
+    path: '/',
     component: LoginView
   },
   {
-    path: '/',
+    path: '/erp',
     name: 'DashView',
     component: DashView,
     children:[
