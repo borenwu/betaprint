@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f40057e-387b-431b-8d38-e23234c06514" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/logo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/Dash.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/Login.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.vue" afterPath="$PROJECT_DIR$/src/App.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.js" afterPath="$PROJECT_DIR$/src/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/router/index.js" afterPath="$PROJECT_DIR$/src/router/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/plugins/datetimepicker/bootstrap-datetimepicker.min.css" afterPath="$PROJECT_DIR$/static/js/plugins/datetimepicker/bootstrap-datetimepicker.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/plugins/datetimepicker/bootstrap-datetimepicker.zh-CN.js" afterPath="$PROJECT_DIR$/static/js/plugins/datetimepicker/bootstrap-datetimepicker.zh-CN.js" />
     </list>
     <ignored path="betaprint.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -376,7 +368,7 @@
       <workItem from="1489208745855" duration="4615000" />
       <workItem from="1489226242537" duration="3873000" />
       <workItem from="1489560675755" duration="4768000" />
-      <workItem from="1489643671669" duration="3266000" />
+      <workItem from="1489643671669" duration="3345000" />
     </task>
     <task id="LOCAL-00001" summary="first change">
       <created>1488527662724</created>
@@ -441,11 +433,18 @@
       <option name="project" value="LOCAL" />
       <updated>1489219499461</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="add login">
+      <created>1489646969022</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1489646969022</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="113318000" />
+    <option name="totallyTimeSpent" value="113397000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
@@ -509,7 +508,8 @@
     <MESSAGE value="order CRUD finish! but now bootstrap-data-tables is not good" />
     <MESSAGE value="order CRUD almost good" />
     <MESSAGE value="add vuex user store" />
-    <option name="LAST_COMMIT_MESSAGE" value="add vuex user store" />
+    <MESSAGE value="add login" />
+    <option name="LAST_COMMIT_MESSAGE" value="add login" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
