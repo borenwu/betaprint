@@ -1,8 +1,9 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 import App from './App'
-import router from './router'
+import routes from './router'
 import store from './store'
 
 import 'jquery/dist/jquery.min'
@@ -21,14 +22,37 @@ import '../static/js/plugins/datatables/dataTables.bootstrap'
 import '../static/js/plugins/datatables/dataTables.bootstrap.css'
 
 
+Vue.use(VueRouter)
+
 Vue.config.productionTip = false
 
+var router = new VueRouter({
+  routes: routes,
+  mode: 'history',
+  scrollBehavior: function (to, from, savedPosition) {
+    return savedPosition || { x: 0, y: 0 }
+  }
+})
+
+// Some middleware to help us ensure the user is authenticated.
+router.beforeEach((to, from, next) => {
+  console.log(to.name)
+  if (to.auth) {
+    window.console.log('Not authenticated')
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    next()
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
-  store,
+  router: router,
+  store: store,
   template: '<App/>',
   components: { App }
 })
