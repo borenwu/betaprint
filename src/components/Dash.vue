@@ -290,16 +290,17 @@
 
     methods: {
       checkLogin(){
-        console.log('no user')
         var vm = this
         var user = this.$store.state.user
         if (!user) {
+          console.log('no user')
           vm.loginUser.img = 'static/img/nouser.png'
           vm.loginUser.name = '未登录'
           vm.loginUser.role='请登录'
           vm.loginUser.buttonLabel = '登陆'
         }
         else {
+          console.log('user exist')
           vm.loginUser.img = this.$store.state.user.img
           vm.loginUser.name = this.$store.state.user.name
           vm.loginUser.role= this.$store.state.user.role

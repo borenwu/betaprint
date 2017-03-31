@@ -1,3 +1,6 @@
 {
-  "rootUrl":"http://192.168.1.131:5000"
+  "rootUrl":"http://192.168.1.131:5000",
+  "companyName":"abc",
+  "companyId":1,
+  "companyToken":"12345678"
 }

@@ -113,8 +113,10 @@
   </section>
 </template>
 
-<style>
-
+<style scoped>
+  .input-group input {
+    height: auto;
+  }
 </style>
 
 <script>

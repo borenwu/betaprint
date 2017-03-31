@@ -8,7 +8,8 @@ Vue.use(Vuex)
 
 const state = {
   user: null,
-  token: null,
+  company:{},
+  rootUrl:""
   // userInfo: {
   //   messages: [{1: 'test', 2: 'test'}],
   //   notifications: [],
@@ -21,8 +22,11 @@ const mutations = {
   SET_USER (state, user) {
     state.user = user
   },
-  SET_TOKEN (state, token) {
-    state.token = token
+  SET_COMPANY (state, company) {
+    state.company = company
+  },
+  SET_URL (state, rootUrl) {
+    state.rootUrl = rootUrl
   },
 }
 

@@ -251,6 +251,9 @@
 </template>
 
 <style scoped>
+  .input-group input {
+    height: auto;
+  }
 </style>
 
 <script>
@@ -291,20 +294,19 @@
 
 
       todayOrder(){
-
         var vm = this
-        $.ajax({
-          type: 'get',
-          url: rootUrl+'/order/look'
-        }).done(function (resp) {
-          if (resp.results.length > 0) {
-            vm.orders = resp.results
-          }
-          else {
-            vm.orders = []
-          }
-
-        })
+//        $.ajax({
+//          type: 'get',
+//          url: rootUrl+'/order/look'
+//        }).done(function (resp) {
+//          if (resp.results.length > 0) {
+//            vm.orders = resp.results
+//          }
+//          else {
+//            vm.orders = []
+//          }
+//
+//        })
       },
 
       searchOrder(startDate, endDate){
