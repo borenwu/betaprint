@@ -295,6 +295,13 @@
 
       todayOrder(){
         var vm = this
+        var store = this.$store
+        var company = store.state.company
+        var user = store.state.user
+        var rootUrl = store.state.rootUrl
+        console.log(company)
+        console.log(user)
+        console.log(rootUrl)
 //        $.ajax({
 //          type: 'get',
 //          url: rootUrl+'/order/look'
